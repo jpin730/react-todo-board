@@ -11,6 +11,7 @@ type TodosActions = {
   todos: Todo[];
   initTodos: () => void;
   addTodo: (newTodo: string) => void;
+  editTodo: (newTodo: Todo) => void;
 };
 
 export const useTodosStore = create<TodosState & TodosActions>((set) => ({
@@ -22,6 +23,14 @@ export const useTodosStore = create<TodosState & TodosActions>((set) => ({
   addTodo: (newTodo) =>
     set(({ todos }) => {
       const newTodos = [...todos, createTodo(newTodo)];
+      localStorage.setItem('todos', JSON.stringify(newTodos));
+      return { todos: newTodos };
+    }),
+  editTodo: (newTodo) =>
+    set(({ todos }) => {
+      const index = todos.findIndex(({ id }) => id === newTodo.id);
+      const newTodos = [...todos];
+      newTodos[index] = newTodo;
       localStorage.setItem('todos', JSON.stringify(newTodos));
       return { todos: newTodos };
     }),

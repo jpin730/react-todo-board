@@ -1,6 +1,6 @@
 # React Todo Board
 
-This project is for the development of React with TypeScript.
+This project is for the development of React with TypeScript using CRA and Zustand.
 
 ## Usage
 

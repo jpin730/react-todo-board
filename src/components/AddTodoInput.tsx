@@ -9,7 +9,7 @@ export const AddTodoInput: FC = () => {
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    addTodo(newTodo);
+    addTodo(newTodo.trim());
     setNewTodo('');
   };
 
@@ -22,7 +22,7 @@ export const AddTodoInput: FC = () => {
         value={newTodo}
         onChange={(e) => setNewTodo(e.target.value)}
       />
-      <button className='btn btn-primary px-5' disabled={newTodo.length === 0}>
+      <button className='btn btn-primary px-5' disabled={newTodo.trim().length === 0}>
         Add
       </button>
     </form>
