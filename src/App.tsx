@@ -3,6 +3,7 @@ import { FC, useEffect, useState } from 'react';
 import { AddTodoInput } from './components/AddTodoInput';
 import { createTodo } from './utils/createTodo';
 import { Todo } from './types/Todo';
+import { TodoList } from './components/TodoList';
 
 export const App: FC = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
@@ -27,11 +28,7 @@ export const App: FC = () => {
           <AddTodoInput onAddTodo={handleNewTodo} />
         </div>
 
-        <ul>
-          {todos.map(({ id, todo }) => (
-            <li key={id}>{todo}</li>
-          ))}
-        </ul>
+        <TodoList todos={todos} />
       </div>
     </div>
   );
