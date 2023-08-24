@@ -1,6 +1,6 @@
 # React Todo Board
 
-This project is for the development of React with TypeScript using CRA and Zustand.
+This project is for the development of React with TypeScript using CRA and Zustand. The app imitate a drag and drop todo board using [Atlassian's react-beautiful-dnd](https://github.com/atlassian/react-beautiful-dnd).
 
 ## Usage
 
