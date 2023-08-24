@@ -1,15 +1,15 @@
 import { FC, useState } from 'react';
 
-interface Props {
-  onAddTodo: (value: string) => void;
-}
+import { useTodosStore } from '../store/useTodosStore';
 
-export const AddTodoInput: FC<Props> = ({ onAddTodo }) => {
+export const AddTodoInput: FC = () => {
+  const { addTodo } = useTodosStore();
+
   const [newTodo, setNewTodo] = useState('');
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    onAddTodo(newTodo);
+    addTodo(newTodo);
     setNewTodo('');
   };
 

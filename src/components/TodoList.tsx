@@ -1,13 +1,11 @@
 import { FC } from 'react';
 
-import { Todo } from '../types/Todo';
 import { SingleTodo } from './SingleTodo';
+import { useTodosStore } from '../store/useTodosStore';
 
-interface Props {
-  todos: Todo[];
-}
+export const TodoList: FC = () => {
+  const { todos } = useTodosStore();
 
-export const TodoList: FC<Props> = ({ todos }) => {
   return (
     <div>
       {todos.map((todo) => (
