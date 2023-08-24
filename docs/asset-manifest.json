@@ -1,9 +1,9 @@
 {
   "files": {
-    "main.css": "/static/css/main.31d6cfe0.css",
-    "main.js": "/static/js/main.e02e7278.js",
-    "index.html": "/index.html",
-    "main.e02e7278.js.map": "/static/js/main.e02e7278.js.map"
+    "main.css": "/react-todo-board/static/css/main.31d6cfe0.css",
+    "main.js": "/react-todo-board/static/js/main.e02e7278.js",
+    "index.html": "/react-todo-board/index.html",
+    "main.e02e7278.js.map": "/react-todo-board/static/js/main.e02e7278.js.map"
   },
   "entrypoints": [
     "static/css/main.31d6cfe0.css",

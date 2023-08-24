@@ -17,8 +17,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "BUILD_PATH='./docs' react-scripts build",
+    "start": "PUBLIC_URL='/' react-scripts start",
+    "build": "BUILD_PATH='./docs' PUBLIC_URL='/react-todo-board/' react-scripts build",
     "lint": "eslint src/*",
     "format": "prettier --write src/*",
     "eject": "react-scripts eject"
