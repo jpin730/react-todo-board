@@ -1,10 +1,21 @@
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 
 import { AddTodoInput } from './components/AddTodoInput';
+import { createTodo } from './utils/createTodo';
+import { Todo } from './types/Todo';
 
 export const App: FC = () => {
+  const [todos, setTodos] = useState<Todo[]>([]);
+
+  useEffect(() => {
+    const storedTodos = JSON.parse(localStorage.getItem('todos') || '[]') as Todo[];
+    setTodos(storedTodos);
+  }, []);
+
   const handleNewTodo = (newTodo: string) => {
-    console.log(newTodo);
+    const newTodos = [...todos, createTodo(newTodo)];
+    setTodos(newTodos);
+    localStorage.setItem('todos', JSON.stringify(newTodos));
   };
 
   return (
@@ -12,7 +23,15 @@ export const App: FC = () => {
       <div className='container'>
         <h1 className='text-center mb-3'>React Todo Board</h1>
 
-        <AddTodoInput onAddTodo={handleNewTodo} />
+        <div className='mb-3'>
+          <AddTodoInput onAddTodo={handleNewTodo} />
+        </div>
+
+        <ul>
+          {todos.map(({ id, todo }) => (
+            <li key={id}>{todo}</li>
+          ))}
+        </ul>
       </div>
     </div>
   );
