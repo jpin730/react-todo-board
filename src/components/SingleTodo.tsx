@@ -38,7 +38,7 @@ export const SingleTodo: FC<Props> = ({ todo }) => {
   };
 
   return (
-    <div className='alert alert-primary d-flex align-items-center'>
+    <div className={`alert alert-${isDone ? 'success' : 'info'} d-flex align-items-center`}>
       <button
         className='btn border-0 text-primary-emphasis'
         disabled={editMode}
@@ -50,13 +50,14 @@ export const SingleTodo: FC<Props> = ({ todo }) => {
       {editMode ? (
         <input
           type='text'
-          className='form-control bg-primary-subtle me-2'
+          className={`form-control bg-${isDone ? 'success' : 'info'}-subtle me-2`}
           value={titleInput}
           ref={(input) => {
             input?.focus();
           }}
           onChange={(e) => setTitleInput(e.target.value)}
           onKeyUp={(e) => e.key === 'Enter' && handleEdit()}
+          onBlur={handleCancelEdit}
           disabled={titleInput.trim().length === 0}
         />
       ) : (
