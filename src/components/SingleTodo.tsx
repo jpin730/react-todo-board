@@ -8,22 +8,28 @@ interface Props {
 }
 
 export const SingleTodo: FC<Props> = ({ todo }) => {
-  const { title, isDone } = todo;
+  const { id, title, isDone } = todo;
 
-  const { editTodo } = useTodosStore();
+  const { editTodo, removeTodo } = useTodosStore();
 
   const [editMode, setEditMode] = useState(false);
   const [titleInput, setTitleInput] = useState(title);
 
   const handleEdit = () => {
     if (titleInput.trim().length === 0) return;
+
     if (editMode) {
-      const editedTodo = { ...todo, title: titleInput.trim() };
-      editTodo(editedTodo);
+      const newTitle = titleInput.trim();
+      editTodo({ ...todo, title: newTitle });
+      setTitleInput(newTitle);
       setEditMode(false);
     } else {
       setEditMode(true);
     }
+  };
+
+  const toggleTodo = () => {
+    editTodo({ ...todo, isDone: !isDone });
   };
 
   const handleCancelEdit = () => {
@@ -33,24 +39,26 @@ export const SingleTodo: FC<Props> = ({ todo }) => {
 
   return (
     <div className='alert alert-primary d-flex align-items-center'>
-      <button className='btn border-0 text-primary-emphasis' disabled={editMode}>
+      <button
+        className='btn border-0 text-primary-emphasis'
+        disabled={editMode}
+        onClick={toggleTodo}
+      >
         <i className={`bi-check-square${isDone ? '-fill' : ''}`}></i>
       </button>
 
       {editMode ? (
-        <>
-          <input
-            type='text'
-            className='form-control bg-primary-subtle me-2'
-            value={titleInput}
-            ref={(input) => {
-              input?.focus();
-            }}
-            onChange={(e) => setTitleInput(e.target.value)}
-            onKeyUp={(e) => e.key === 'Enter' && handleEdit()}
-            disabled={titleInput.trim().length === 0}
-          />
-        </>
+        <input
+          type='text'
+          className='form-control bg-primary-subtle me-2'
+          value={titleInput}
+          ref={(input) => {
+            input?.focus();
+          }}
+          onChange={(e) => setTitleInput(e.target.value)}
+          onKeyUp={(e) => e.key === 'Enter' && handleEdit()}
+          disabled={titleInput.trim().length === 0}
+        />
       ) : (
         <span>{title}</span>
       )}
@@ -66,7 +74,11 @@ export const SingleTodo: FC<Props> = ({ todo }) => {
       <button className='btn border-0 text-primary-emphasis' onClick={handleEdit}>
         <i className='bi-pencil-fill'></i>
       </button>
-      <button className='btn border-0 text-primary-emphasis' disabled={editMode}>
+      <button
+        className='btn border-0 text-primary-emphasis'
+        disabled={editMode}
+        onClick={() => removeTodo(id)}
+      >
         <i className='bi-trash-fill'></i>
       </button>
     </div>

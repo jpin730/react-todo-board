@@ -12,6 +12,7 @@ type TodosActions = {
   initTodos: () => void;
   addTodo: (newTodo: string) => void;
   editTodo: (newTodo: Todo) => void;
+  removeTodo: (todoId: number) => void;
 };
 
 export const useTodosStore = create<TodosState & TodosActions>((set) => ({
@@ -31,6 +32,12 @@ export const useTodosStore = create<TodosState & TodosActions>((set) => ({
       const index = todos.findIndex(({ id }) => id === newTodo.id);
       const newTodos = [...todos];
       newTodos[index] = newTodo;
+      localStorage.setItem('todos', JSON.stringify(newTodos));
+      return { todos: newTodos };
+    }),
+  removeTodo: (todoId) =>
+    set(({ todos }) => {
+      const newTodos = todos.filter(({ id }) => id !== todoId);
       localStorage.setItem('todos', JSON.stringify(newTodos));
       return { todos: newTodos };
     }),
