@@ -18,25 +18,21 @@ export const SingleTodo: FC<Props> = ({ todo, index }) => {
   const [titleInput, setTitleInput] = useState(title);
 
   const handleEdit = () => {
-    if (titleInput.trim().length === 0) return;
+    const newTitle = titleInput.trim();
 
-    if (editMode) {
-      const newTitle = titleInput.trim();
-      editTodo({ ...todo, title: newTitle });
-      setTitleInput(newTitle);
-      setEditMode(false);
-    } else {
-      setEditMode(true);
+    setEditMode(false);
+
+    if (newTitle.length === 0) {
+      setTitleInput(title);
+      return;
     }
+
+    editTodo({ ...todo, title: newTitle });
+    setTitleInput(newTitle);
   };
 
   const toggleTodo = () => {
     editTodo({ ...todo, isDone: !isDone });
-  };
-
-  const handleCancelEdit = () => {
-    setTitleInput(title);
-    setEditMode(false);
   };
 
   return (
@@ -49,7 +45,7 @@ export const SingleTodo: FC<Props> = ({ todo, index }) => {
           {...provided.dragHandleProps}
         >
           <button
-            className='btn border-0 text-primary-emphasis'
+            className={`btn border-0 ${editMode ? 'text-secondary' : 'text-primary-emphasis'}`}
             disabled={editMode}
             onClick={toggleTodo}
           >
@@ -60,28 +56,24 @@ export const SingleTodo: FC<Props> = ({ todo, index }) => {
               type='text'
               className={`form-control bg-${isDone ? 'success' : 'info'}-subtle me-2`}
               value={titleInput}
-              ref={(input) => {
-                input?.focus();
-              }}
-              onChange={(e) => setTitleInput(e.target.value)}
-              onKeyUp={(e) => e.key === 'Enter' && handleEdit()}
               onBlur={handleEdit}
-              disabled={titleInput.trim().length === 0}
+              ref={(el) => el?.focus()}
+              onChange={(e) => setTitleInput(e.target.value)}
             />
           ) : (
-            <span>{title}</span>
+            <span className='ms-2'>{title}</span>
           )}
           <span className='flex-grow-1'></span>
-          {editMode && (
-            <button className='btn border-0 text-primary-emphasis' onClick={handleCancelEdit}>
-              <i className='bi-arrow-counterclockwise'></i>
-            </button>
-          )}
-          <button className='btn border-0 text-primary-emphasis' onClick={handleEdit}>
+
+          <button
+            className={`btn border-0 ${editMode ? 'text-secondary' : 'text-primary-emphasis'}`}
+            onClick={() => setEditMode(true)}
+            disabled={editMode}
+          >
             <i className='bi-pencil-fill'></i>
           </button>
           <button
-            className='btn border-0 text-primary-emphasis'
+            className={`btn border-0 ${editMode ? 'text-secondary' : 'text-primary-emphasis'}`}
             disabled={editMode}
             onClick={() => removeTodo(id)}
           >
