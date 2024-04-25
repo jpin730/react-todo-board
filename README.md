@@ -21,7 +21,3 @@ Build app
 ```
 npm run build
 ```
-
-## Deployed app
-
-https://jpin730.github.io/react-todo-board
